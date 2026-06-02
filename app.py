@@ -946,5 +946,31 @@ def reports():
     )
 
 
+
+@app.route("/debug_db")
+def debug_db():
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute("SELECT current_database(), current_schema();")
+    db_info = cur.fetchone()
+
+    cur.execute("""
+        SELECT table_schema, table_name
+        FROM information_schema.tables
+        WHERE table_schema = 'public'
+        ORDER BY table_name;
+    """)
+    tables = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    return {
+        "db_info": dict(db_info),
+        "tables": [dict(row) for row in tables]
+    }
+
+
 if __name__ == "__main__":
     app.run(debug=True)
