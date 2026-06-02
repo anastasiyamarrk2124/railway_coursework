@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Редактирование станции</h2>
+
+<form method="post">
+
+    <p>
+        <label>Код станции:</label><br>
+        <input
+            type="text"
+            name="station_code"
+            value="{{ station.station_code }}"
+            required>
+    </p>
+
+    <p>
+        <label>Название станции:</label><br>
+        <input
+            type="text"
+            name="station_name"
+            value="{{ station.station_name }}"
+            required>
+    </p>
+
+    <p>
+        <label>Город:</label><br>
+        <input
+            type="text"
+            name="city"
+            value="{{ station.city }}"
+            required>
+    </p>
+
+    <button type="submit">
+        Сохранить
+    </button>
+
+</form>
+
+<p>
+    <a href="/">Назад к списку</a>
+</p>
+
+{% endblock %}

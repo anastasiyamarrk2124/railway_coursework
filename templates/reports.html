@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Отчеты и статистика</h2>
+
+<h3>Выручка по рейсам</h3>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>Поезд</th>
+        <th>Маршрут</th>
+        <th>Количество билетов</th>
+        <th>Выручка</th>
+    </tr>
+
+    {% for row in income_report %}
+    <tr>
+        <td>{{ row.train_number }}</td>
+        <td>{{ row.route_name }}</td>
+        <td>{{ row.tickets_count }}</td>
+        <td>{{ row.total_income }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h3>Количество билетов по статусам</h3>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>Статус</th>
+        <th>Количество</th>
+    </tr>
+
+    {% for row in ticket_status_report %}
+    <tr>
+        <td>{{ row.status }}</td>
+        <td>{{ row.count }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h3>Количество рейсов по маршрутам</h3>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>Маршрут</th>
+        <th>Количество рейсов</th>
+    </tr>
+
+    {% for row in routes_report %}
+    <tr>
+        <td>{{ row.route_name }}</td>
+        <td>{{ row.trips_count }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Добавить рейс</h2>
+
+<form method="post">
+
+    <p>
+        <label>Поезд:</label><br>
+        <select name="train_id" required>
+            {% for train in trains %}
+                <option value="{{ train.train_id }}">
+                    {{ train.train_number }} — {{ train.train_type }}
+                </option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        <label>Маршрут:</label><br>
+        <select name="route_id" required>
+            {% for route in routes %}
+                <option value="{{ route.route_id }}">
+                    {{ route.route_name }}
+                </option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        <label>Дата отправления:</label><br>
+        <input type="date" name="departure_date" required>
+    </p>
+
+    <p>
+        <label>Время отправления:</label><br>
+        <input type="time" name="departure_time" required>
+    </p>
+
+    <p>
+        <label>Дата прибытия:</label><br>
+        <input type="date" name="arrival_date" required>
+    </p>
+
+    <p>
+        <label>Время прибытия:</label><br>
+        <input type="time" name="arrival_time" required>
+    </p>
+
+    <p>
+        <label>Статус:</label><br>
+        <select name="status" required>
+            <option value="scheduled">Запланирован</option>
+            <option value="departed">Отправлен</option>
+            <option value="arrived">Прибыл</option>
+            <option value="cancelled">Отменен</option>
+        </select>
+    </p>
+
+    <button type="submit">Добавить</button>
+
+</form>
+
+<p>
+    <a href="/trips">Назад к списку</a>
+</p>
+
+{% endblock %}

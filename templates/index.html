@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Станции</h2>
+
+{% if session.get("role") == "admin" %}
+
+<p>
+    <a href="/add_station">Добавить станцию</a>
+</p>
+
+{% endif %}
+
+<form method="get">
+    <input type="text"
+           name="search"
+           placeholder="Поиск станции"
+           value="{{ search }}">
+
+    <button type="submit">
+        Найти
+    </button>
+
+    <a href="/">Сбросить</a>
+</form>
+
+<br>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th>
+        <th>Код станции</th>
+        <th>Название</th>
+        <th>Город</th>
+
+        {% if session.get("role") == "admin" %}
+        <th>Действия</th>
+        {% endif %}
+
+    </tr>
+
+    {% for station in stations %}
+    <tr>
+        <td>{{ station.station_id }}</td>
+        <td>{{ station.station_code }}</td>
+        <td>{{ station.station_name }}</td>
+        <td>{{ station.city }}</td>
+
+
+        {% if session.get("role") == "admin" %}
+        <td>
+            <a href="/edit_station/{{ station.station_id }}">
+                Изменить
+            </a>
+
+            <form action="/delete_station/{{ station.station_id }}"
+                  method="post"
+                  style="display:inline;">
+
+                <button type="submit"
+                        onclick="return confirm('Удалить станцию?');">
+
+                    Удалить
+
+                </button>
+
+            </form>
+        </td>
+        {% endif %}
+
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

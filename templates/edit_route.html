@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Редактировать маршрут</h2>
+
+<form method="post">
+    <p>
+        <label>Название маршрута:</label><br>
+        <input type="text" name="route_name" value="{{ route.route_name }}" required>
+    </p>
+
+    <button type="submit">Сохранить</button>
+</form>
+
+<p>
+    <a href="/routes">Назад к списку</a>
+</p>
+
+{% endblock %}

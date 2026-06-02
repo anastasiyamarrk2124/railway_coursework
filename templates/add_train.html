@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Добавить поезд</h2>
+
+<form method="post">
+    <p>
+        <label>Номер поезда:</label><br>
+        <input type="text" name="train_number" required>
+    </p>
+
+    <p>
+        <label>Тип поезда:</label><br>
+        <input type="text" name="train_type" required>
+    </p>
+
+    <p>
+        <label>Количество мест:</label><br>
+        <input type="number" name="seat_count" min="1" required>
+    </p>
+
+    <button type="submit">Добавить</button>
+</form>
+
+<p>
+    <a href="/trains">Назад к списку</a>
+</p>
+
+{% endblock %}

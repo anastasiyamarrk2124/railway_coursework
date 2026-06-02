@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Добавить билет</h2>
+
+<form method="post">
+
+    <p>
+        <label>Рейс:</label><br>
+        <select name="trip_id" required>
+            {% for trip in trips %}
+                <option value="{{ trip.trip_id }}">
+                    {{ trip.train_number }} — {{ trip.route_name }} —
+                    {{ trip.departure_date }} {{ trip.departure_time }}
+                </option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        <label>Пользователь:</label><br>
+        <select name="user_id" required>
+            {% for user in users %}
+                <option value="{{ user.user_id }}">
+                    {{ user.username }} — {{ user.role }}
+                </option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        <label>Номер места:</label><br>
+        <input type="number" name="seat_number" min="1" required>
+    </p>
+
+    <p>
+        <label>Цена:</label><br>
+        <input type="number" name="price" min="0" step="0.01" required>
+    </p>
+
+    <p>
+        <label>Статус:</label><br>
+        <select name="status" required>
+            <option value="booked">Забронирован</option>
+            <option value="paid">Оплачен</option>
+            <option value="cancelled">Отменен</option>
+        </select>
+    </p>
+
+    <button type="submit">Добавить</button>
+
+</form>
+
+<p>
+    <a href="/tickets">Назад к списку</a>
+</p>
+
+{% endblock %}

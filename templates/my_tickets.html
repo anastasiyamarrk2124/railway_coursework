@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Мои билеты</h2>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th>
+        <th>Поезд</th>
+        <th>Маршрут</th>
+        <th>Дата отправления</th>
+        <th>Время</th>
+        <th>Место</th>
+        <th>Цена</th>
+        <th>Статус</th>
+        <th>Дата покупки</th>
+    </tr>
+
+    {% for ticket in tickets %}
+    <tr>
+        <td>{{ ticket.ticket_id }}</td>
+        <td>{{ ticket.train_number }}</td>
+        <td>{{ ticket.route_name }}</td>
+        <td>{{ ticket.departure_date }}</td>
+        <td>{{ ticket.departure_time }}</td>
+        <td>{{ ticket.seat_number }}</td>
+        <td>{{ ticket.price }}</td>
+        <td>{{ ticket.status }}</td>
+        <td>{{ ticket.purchase_date }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

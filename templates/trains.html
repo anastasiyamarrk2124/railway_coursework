@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Поезда</h1>
+
+{% if session.get("role") == "admin" %}
+<p>
+    <a href="/add_train">Добавить поезд</a>
+</p>
+{% endif %}
+
+<form method="get">
+    <input type="text"
+           name="search"
+           value="{{ search }}"
+           placeholder="Поиск поезда">
+
+    <button type="submit">
+        Найти
+    </button>
+</form>
+
+<br>
+
+<table border="1">
+
+    <tr>
+        <th>ID</th>
+        <th>Номер поезда</th>
+        <th>Тип</th>
+        <th>Количество мест</th>
+        {% if session.get("role") == "admin" %}
+        <th>Действия</th>
+        {% endif %}
+    </tr>
+
+    {% for train in trains %}
+    <tr>
+
+        <td>{{ train.train_id }}</td>
+        <td>{{ train.train_number }}</td>
+        <td>{{ train.train_type }}</td>
+        <td>{{ train.seat_count }}</td>
+
+        {% if session.get("role") == "admin" %}
+
+        <td>
+
+            <a href="/edit_train/{{ train.train_id }}">
+                Изменить
+            </a>
+
+            <form
+                action="/delete_train/{{ train.train_id }}"
+                method="post"
+                style="display:inline;">
+
+                <button
+                    type="submit"
+                    onclick="return confirm('Удалить поезд?')">
+
+                    Удалить
+
+                </button>
+
+            </form>
+
+        </td>
+
+        {% endif %}
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}

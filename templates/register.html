@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Регистрация</h2>
+
+<form method="post">
+    <p>
+        <label>Логин:</label><br>
+        <input type="text" name="username" required>
+    </p>
+
+    <p>
+        <label>Пароль:</label><br>
+        <input type="password" name="password" required>
+    </p>
+
+    <button type="submit">Зарегистрироваться</button>
+</form>
+
+<p>
+    <a href="/login">Уже есть аккаунт? Войти</a>
+</p>
+
+{% endblock %}

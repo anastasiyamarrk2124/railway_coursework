@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Вход</h2>
+
+<form method="post">
+    <p>
+        <label>Логин:</label><br>
+        <input type="text" name="username" required>
+    </p>
+
+    <p>
+        <label>Пароль:</label><br>
+        <input type="password" name="password" required>
+    </p>
+
+    <button type="submit">Войти</button>
+</form>
+
+<p>
+    <a href="/register">Создать аккаунт</a>
+</p>
+
+{% endblock %}

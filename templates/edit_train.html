@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Редактировать поезд</h2>
+
+<form method="post">
+    <p>
+        <label>Номер поезда:</label><br>
+        <input type="text" name="train_number" value="{{ train.train_number }}" required>
+    </p>
+
+    <p>
+        <label>Тип поезда:</label><br>
+        <input type="text" name="train_type" value="{{ train.train_type }}" required>
+    </p>
+
+    <p>
+        <label>Количество мест:</label><br>
+        <input type="number" name="seat_count" value="{{ train.seat_count }}" min="1" required>
+    </p>
+
+    <button type="submit">Сохранить</button>
+</form>
+
+<p>
+    <a href="/trains">Назад к списку</a>
+</p>
+
+{% endblock %}

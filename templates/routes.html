@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Маршруты</h2>
+
+{% if session.get("role") == "admin" %}
+<p>
+    <a href="/add_route">Добавить маршрут</a>
+</p>
+{% endif %}
+
+<form method="get">
+    <input type="text" name="search" value="{{ search }}" placeholder="Поиск маршрута">
+    <button type="submit">Найти</button>
+    <a href="/routes">Сбросить</a>
+</form>
+
+<br>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th>
+        <th>Название маршрута</th>
+        {% if session.get("role") == "admin" %}
+        <th>Действия</th>
+        {% endif %}
+    </tr>
+
+
+    {% for route in routes %}
+    <tr>
+        {% if session.get("role") == "admin" %}
+        <td>{{ route.route_id }}</td>
+        <td>{{ route.route_name }}</td>
+        <td>
+            <a href="/edit_route/{{ route.route_id }}">Изменить</a>
+
+            <form action="/delete_route/{{ route.route_id }}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('Удалить маршрут?');">
+                    Удалить
+                </button>
+            </form>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}

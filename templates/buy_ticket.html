@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Покупка билета</h2>
+
+<p>
+    <strong>Поезд:</strong> {{ trip.train_number }}
+</p>
+
+<p>
+    <strong>Маршрут:</strong> {{ trip.route_name }}
+</p>
+
+<p>
+    <strong>Отправление:</strong>
+    {{ trip.departure_date }} {{ trip.departure_time }}
+</p>
+
+<p>
+    <strong>Прибытие:</strong>
+    {{ trip.arrival_date }} {{ trip.arrival_time }}
+</p>
+
+<form method="post">
+    <p>
+        <label>Номер места:</label><br>
+        <input type="number" name="seat_number" min="1" required>
+    </p>
+
+    <p>
+        <label>Цена:</label><br>
+        <input type="number" name="price" min="0" step="0.01" required>
+    </p>
+
+    <button type="submit">Купить билет</button>
+</form>
+
+<p>
+    <a href="/trips">Назад к рейсам</a>
+</p>
+
+{% endblock %}

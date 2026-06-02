@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Рейсы</h2>
+
+{% if session.get("role") in ["admin", "operator"] %}
+<p>
+    <a href="/add_trip">Добавить рейс</a>
+</p>
+{% endif %}
+
+<form method="get">
+    <input type="text" name="search" value="{{ search }}" placeholder="Поиск рейса">
+    <button type="submit">Найти</button>
+    <a href="/trips">Сбросить</a>
+</form>
+
+<br>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th>
+        <th>Поезд</th>
+        <th>Маршрут</th>
+        <th>Дата отправления</th>
+        <th>Время отправления</th>
+        <th>Дата прибытия</th>
+        <th>Время прибытия</th>
+        <th>Статус</th>
+        {% if session.get("role") in ["admin", "operator", "passenger"] %}
+        <th>Действия</th>
+        {% endif %}
+    </tr>
+
+    {% for trip in trips %}
+    <tr>
+        <td>{{ trip.trip_id }}</td>
+        <td>{{ trip.train_number }}</td>
+        <td>{{ trip.route_name }}</td>
+        <td>{{ trip.departure_date }}</td>
+        <td>{{ trip.departure_time }}</td>
+        <td>{{ trip.arrival_date }}</td>
+        <td>{{ trip.arrival_time }}</td>
+        <td>{{ trip.status }}</td>
+
+        {% if session.get("role") in ["admin", "operator"] %}
+        <td>
+            <a href="/edit_trip/{{ trip.trip_id }}">Изменить</a>
+
+            <form action="/delete_trip/{{ trip.trip_id }}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('Удалить рейс?');">
+                    Удалить
+                </button>
+            </form>
+        </td>
+        {% endif %}
+
+{% if session.get("role") == "passenger" %}
+<td>
+    <a href="/buy_ticket/{{ trip.trip_id }}">Купить билет</a>
+</td>
+{% endif %}
+
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

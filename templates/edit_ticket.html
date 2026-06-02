@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Редактировать билет</h2>
+
+<form method="post">
+
+    <p>
+        <label>Рейс:</label><br>
+        <select name="trip_id" required>
+            {% for trip in trips %}
+                <option value="{{ trip.trip_id }}"
+                    {% if trip.trip_id == ticket.trip_id %}selected{% endif %}>
+                    {{ trip.train_number }} — {{ trip.route_name }} —
+                    {{ trip.departure_date }} {{ trip.departure_time }}
+                </option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        <label>Пользователь:</label><br>
+        <select name="user_id" required>
+            {% for user in users %}
+                <option value="{{ user.user_id }}"
+                    {% if user.user_id == ticket.user_id %}selected{% endif %}>
+                    {{ user.username }} — {{ user.role }}
+                </option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        <label>Номер места:</label><br>
+        <input type="number" name="seat_number" value="{{ ticket.seat_number }}" min="1" required>
+    </p>
+
+    <p>
+        <label>Цена:</label><br>
+        <input type="number" name="price" value="{{ ticket.price }}" min="0" step="0.01" required>
+    </p>
+
+    <p>
+        <label>Статус:</label><br>
+        <select name="status" required>
+            <option value="booked" {% if ticket.status == "booked" %}selected{% endif %}>Забронирован</option>
+            <option value="paid" {% if ticket.status == "paid" %}selected{% endif %}>Оплачен</option>
+            <option value="cancelled" {% if ticket.status == "cancelled" %}selected{% endif %}>Отменен</option>
+        </select>
+    </p>
+
+    <button type="submit">Сохранить</button>
+
+</form>
+
+<p>
+    <a href="/tickets">Назад к списку</a>
+</p>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Редактировать рейс</h2>
+
+<form method="post">
+
+    <p>
+        <label>Поезд:</label><br>
+        <select name="train_id" required>
+            {% for train in trains %}
+                <option value="{{ train.train_id }}"
+                    {% if train.train_id == trip.train_id %}selected{% endif %}>
+                    {{ train.train_number }} — {{ train.train_type }}
+                </option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        <label>Маршрут:</label><br>
+        <select name="route_id" required>
+            {% for route in routes %}
+                <option value="{{ route.route_id }}"
+                    {% if route.route_id == trip.route_id %}selected{% endif %}>
+                    {{ route.route_name }}
+                </option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        <label>Дата отправления:</label><br>
+        <input type="date" name="departure_date" value="{{ trip.departure_date }}" required>
+    </p>
+
+    <p>
+        <label>Время отправления:</label><br>
+        <input type="time" name="departure_time" value="{{ trip.departure_time }}" required>
+    </p>
+
+    <p>
+        <label>Дата прибытия:</label><br>
+        <input type="date" name="arrival_date" value="{{ trip.arrival_date }}" required>
+    </p>
+
+    <p>
+        <label>Время прибытия:</label><br>
+        <input type="time" name="arrival_time" value="{{ trip.arrival_time }}" required>
+    </p>
+
+    <p>
+        <label>Статус:</label><br>
+        <select name="status" required>
+            <option value="scheduled" {% if trip.status == "scheduled" %}selected{% endif %}>Запланирован</option>
+            <option value="departed" {% if trip.status == "departed" %}selected{% endif %}>Отправлен</option>
+            <option value="arrived" {% if trip.status == "arrived" %}selected{% endif %}>Прибыл</option>
+            <option value="cancelled" {% if trip.status == "cancelled" %}selected{% endif %}>Отменен</option>
+        </select>
+    </p>
+
+    <button type="submit">Сохранить</button>
+
+</form>
+
+<p>
+    <a href="/trips">Назад к списку</a>
+</p>
+
+{% endblock %}
