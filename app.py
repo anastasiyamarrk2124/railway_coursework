@@ -118,6 +118,7 @@ def edit_station(station_id):
 def delete_station(station_id):
     if not admin_required():
         return "Доступ запрещен. Это действие доступно только администратору."
+
     conn = get_connection()
     cur = conn.cursor()
 
@@ -129,9 +130,8 @@ def delete_station(station_id):
 
         conn.commit()
 
-    except psycopg2.errors.RestrictViolation:
+    except (psycopg2.errors.RestrictViolation, psycopg2.errors.ForeignKeyViolation):
         conn.rollback()
-
         cur.close()
         conn.close()
 
