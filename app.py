@@ -241,6 +241,7 @@ def edit_train(train_id):
 def delete_train(train_id):
     if not admin_required():
         return "Доступ запрещен. Это действие доступно только администратору."
+
     conn = get_connection()
     cur = conn.cursor()
 
@@ -252,7 +253,7 @@ def delete_train(train_id):
 
         conn.commit()
 
-    except psycopg2.errors.RestrictViolation:
+    except (psycopg2.errors.RestrictViolation, psycopg2.errors.ForeignKeyViolation):
         conn.rollback()
         cur.close()
         conn.close()
@@ -352,6 +353,7 @@ def edit_route(route_id):
 def delete_route(route_id):
     if not admin_required():
         return "Доступ запрещен. Это действие доступно только администратору."
+
     conn = get_connection()
     cur = conn.cursor()
 
@@ -363,12 +365,12 @@ def delete_route(route_id):
 
         conn.commit()
 
-    except psycopg2.errors.RestrictViolation:
+    except (psycopg2.errors.RestrictViolation, psycopg2.errors.ForeignKeyViolation):
         conn.rollback()
         cur.close()
         conn.close()
 
-        return "Нельзя удалить маршрут, потому что он используется в рейсе."
+        return "Нельзя удалить маршрут, потому что он используется в рейсе или списке станций маршрута."
 
     cur.close()
     conn.close()
