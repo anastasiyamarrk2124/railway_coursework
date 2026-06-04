@@ -8,17 +8,19 @@
 
 <table border="1" cellpadding="8">
     <tr>
+        <th>ID рейса</th>
         <th>Поезд</th>
         <th>Маршрут</th>
-        <th>Количество билетов</th>
-        <th>Выручка</th>
+        <th>Продано билетов</th>
+        <th>Доход</th>
     </tr>
 
     {% for row in income_report %}
     <tr>
+        <td>{{ row.trip_id }}</td>
         <td>{{ row.train_number }}</td>
         <td>{{ row.route_name }}</td>
-        <td>{{ row.tickets_count }}</td>
+        <td>{{ row.sold_tickets }}</td>
         <td>{{ row.total_income }}</td>
     </tr>
     {% endfor %}

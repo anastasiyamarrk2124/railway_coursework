@@ -899,30 +899,20 @@ def reports():
     cur = conn.cursor()
 
     cur.execute("""
-        SELECT
-            trains.train_number,
-            routes.route_name,
-            COUNT(tickets.ticket_id) AS tickets_count,
-            COALESCE(SUM(tickets.price), 0) AS total_income
-        FROM trips
-        JOIN trains ON trips.train_id = trains.train_id
-        JOIN routes ON trips.route_id = routes.route_id
-        LEFT JOIN tickets ON tickets.trip_id = trips.trip_id
-        GROUP BY trains.train_number, routes.route_name
+        SELECT *
+        FROM trip_income
         ORDER BY total_income DESC;
     """)
-
     income_report = cur.fetchall()
 
     cur.execute("""
         SELECT
-            tickets.status,
+            status,
             COUNT(*) AS count
         FROM tickets
-        GROUP BY tickets.status
+        GROUP BY status
         ORDER BY count DESC;
     """)
-
     ticket_status_report = cur.fetchall()
 
     cur.execute("""
@@ -930,11 +920,10 @@ def reports():
             routes.route_name,
             COUNT(trips.trip_id) AS trips_count
         FROM routes
-        LEFT JOIN trips ON trips.route_id = routes.route_id
+        LEFT JOIN trips ON routes.route_id = trips.route_id
         GROUP BY routes.route_name
         ORDER BY trips_count DESC;
     """)
-
     routes_report = cur.fetchall()
 
     cur.close()
